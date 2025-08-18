@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Recipes Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* General Styles & Variables */
+        :root {
+            --primary-color: #A0522D; /* Sienna */
+            --secondary-color: #CD853F; /* Peruvian Brown */
+            --background-color: #FDF5E6; /* Old Lace */
+            --card-background: #fff;
+            --text-color: #2F4F4F; /* Dark Slate Gray */
+            --light-text-color: #808080; /* Gray */
+            --border-color: #D2B48C; /* Tan */
+            --hover-color: #8B4513; /* Saddle Brown */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navbar */
+        header {
+            background-color: var(--card-background);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Page Management */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Home Page - Hero Section */
+        #home-page {
+            background: linear-gradient(rgba(160, 82, 45, 0.7), rgba(205, 133, 63, 0.7)), url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2680&auto=format&fit=crop') no-repeat center center/cover;
+            color: #fff;
+            padding: 150px 0;
+            text-align: center;
+        }
+
+        #home-page h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        #home-page p {
+            font-size: 1.3rem;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .btn-get-started {
+            display: inline-block;
+            background-color: #fff;
+            color: var(--primary-color);
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .btn-get-started:hover {
+            background-color: #f1f1f1;
+            transform: translateY(-3px);
+        }
+        
+        /* Home Page - Details Section */
+        .home-details {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .home-details h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .home-details p {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+        }
+
+        .offering-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .offering-card {
+            background-color: var(--card-background); /* Reverted to white for better contrast */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
+            text-align: left;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .offering-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .offering-card h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        .offering-card p {
+            color: var(--text-color); /* Ensures text is dark and readable */
+            margin: 0;
+        }
+
+        /* Recipes List Page */
+        #recipes-list-page {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        #recipes-list-page h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--text-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        #recipes-list-page h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .recipe-preview-card {
+            background-color: var(--card-background);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .recipe-preview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .recipe-preview-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .recipe-preview-card h3 {
+            font-size: 1.2rem;
+            padding: 15px;
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Recipe Detail Page */
+        #recipe-detail-page {
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .recipe-card-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1000px;
+            width: 100%;
+            background-color: var(--card-background);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        .recipe-image-detail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .recipe-details-content {
+            padding: 40px;
+            text-align: left;
+        }
+
+        .recipe-details-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .recipe-details-content .meta {
+            color: var(--light-text-color);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+        
+        .ingredients-list-detail h3, .instructions-list-detail h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        .ingredients-list-detail ul, .instructions-list-detail ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ingredients-list-detail li, .instructions-list-detail li {
+            padding: 8px 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .ingredients-list-detail li:hover {
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .instructions-list-detail li.highlighted {
+            background-color: var(--secondary-color);
+            color: #fff;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .controls-detail {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .btn-detail {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 700;
+        }
+        
+        .btn-detail:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-detail:disabled {
+            background-color: var(--light-text-color);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-container-detail {
+            margin: 30px 0;
+        }
+
+        .progress-bar-detail {
+            width: 100%;
+            height: 15px;
+            background-color: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill-detail {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .timer-display-detail {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #34495e;
+            color: #fff;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 15px;
+            }
+            #home-page h1 {
+                font-size: 2.5rem;
+            }
+            .offering-cards {
+                grid-template-columns: 1fr;
+            }
+            .recipe-card-detail {
+                grid-template-columns: 1fr;
+            }
+            .recipe-details-content {
+                padding: 20px;
+            }
+            .recipe-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media print {
+            body { background-color: #fff; }
+            header, footer, #recipes-list-page, .controls-detail { display: none; }
+            #recipe-detail-page { display: block; padding: 0; }
+            .recipe-card-detail { box-shadow: none; grid-template-columns: 1fr; }
+            .recipe-image-detail, .progress-container-detail { display: none; }
+            .recipe-details-content { padding: 0; text-align: left; }
+            .ingredients-list-detail h3, .instructions-list-detail h3 { color: #000; }
+            .ingredients-list-detail ul, .instructions-list-detail ol { padding-left: 20px; }
+            .ingredients-list-detail li, .instructions-list-detail li { border-left: none; }
+            .instructions-list-detail li.highlighted { background-color: #fff; color: #000; border-left: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="#" class="logo" data-page="home-page">Global Recipes Hub</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#" data-page="home-page">Home</a></li>
+                    <li><a href="#" data-page="recipes-list-page">Recipes</a></li>
+                    <li><a href="#" data-page="about-page">About</a></li>
+                    <li><a href="#" data-page="contact-page">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Page -->
+        <div id="home-page" class="page-section active">
+            <div class="container">
+                <h1>Taste the World, One Recipe at a Time.</h1>
+                <p>Welcome to our culinary community, where you can explore a vast collection of recipes, from quick weeknight dinners to gourmet creations. Discover new flavors, master essential techniques, and share your own cooking journey.</p>
+                <button class="btn-get-started" data-page="recipes-list-page">Get Started</button>
+            </div>
+            <div class="home-details">
+                <div class="container">
+                    <h2 style="color: var(--text-color);">What We Offer</h2>
+                    <p>We are more than just a recipe site. We provide a platform designed to make cooking an engaging and rewarding experience for everyone, regardless of their skill level.</p>
+                    <div class="offering-cards">
+                        <div class="offering-card">
+                            <h3>Curated Recipes</h3>
+                            <p>Our recipes are hand-picked from renowned chefs and home cooks worldwide, ensuring a delicious and authentic experience.</p>
+                        </div>
+                        <div class="offering-card">
+                            <h3>Step-by-Step Guidance</h3>
+                            <p>Each recipe comes with clear, easy-to-follow instructions, so you can cook with confidence every time.</p>
+                        </div>
+                        <div class="offering-card">
+                            <h3>Interactive Tools</h3>
+                            <p>Use our built-in timer and progress bar to stay on track and manage your cooking time efficiently.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recipes List Page -->
+        <div id="recipes-list-page" class="page-section">
+            <div class="container">
+                <h1>All Recipes</h1>
+                <div id="recipe-grid" class="recipe-grid">
+                    <!-- Recipes will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recipe Detail Page -->
+        <div id="recipe-detail-page" class="page-section">
+            <!-- Specific recipe details will be dynamically loaded here -->
+        </div>
+
+        <!-- About Page -->
+        <div id="about-page" class="page-section">
+            <div class="container home-details">
+                <h2>Our Story</h2>
+                <p>Global Recipes Hub was born from a simple passion for food and community. We believe that a great meal can bring people together and that every home cook deserves a platform to explore, create, and share their love for cooking. Our team of food enthusiasts and developers works tirelessly to bring you a seamless and inspiring culinary experience.</p>
+                <div class="offering-cards">
+                    <div class="offering-card">
+                        <h3>Our Values</h3>
+                        <p>We are committed to quality, authenticity, and innovation. We ensure every recipe is a delight and our platform is always evolving to meet the needs of modern cooks.</p>
+                    </div>
+                    <div class="offering-card">
+                        <h3>Community Focus</h3>
+                        <p>We encourage our users to share their own recipes, tips, and photos, fostering a vibrant and supportive community of food lovers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact-page" class="page-section">
+            <div class="container home-details">
+                <h2>Contact Us</h2>
+                <p>Have a question, suggestion, or a recipe you'd like to share? We'd love to hear from you. Get in touch with our team through the channels below:</p>
+                <div class="contact-details">
+                    <p><strong>Email:</strong> foody@recipes.com</p>
+                    <p><strong>Phone:</strong> +91 9518391245</p>
+                    <p><strong>Address:</strong> Foody Street Dhule</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Global Recipes Hub. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const recipes = [
+            {
+                id: 1,
+                title: "Spaghetti Bolognese",
+                image: "spaghetti-bolognese.jpg",
+                link: "https://www.allrecipes.com/recipe/221160/bolognese-sauce/",
+                prepTime: "60 minutes",
+                servings: "4",
+                ingredients: ["1 tbsp olive oil", "500g minced beef", "1 onion, chopped", "2 garlic cloves, minced", "1 can (400g) chopped tomatoes", "1 tbsp tomato puree", "1 tsp dried oregano", "400g spaghetti"],
+                instructions: [
+                    "Heat the oil in a large saucepan and brown the minced beef.",
+                    "Add the chopped onion and garlic, and cook until softened.",
+                    "Stir in the chopped tomatoes, tomato puree, and oregano. Season with salt and pepper.",
+                    "Bring to a simmer, then reduce heat and cook for at least 30 minutes, stirring occasionally.",
+                    "Cook the spaghetti according to package instructions. Serve the bolognese sauce over the spaghetti."
+                ]
+            },
+            {
+                id: 2,
+                title: "Classic Pancakes",
+                image: "Classic-Pancake.jpg",
+                link: "https://www.allrecipes.com/recipe/20320/simple-whole-wheat-pancakes/",
+                prepTime: "20 minutes",
+                servings: "2",
+                ingredients: ["1.5 cups all-purpose flour", "2 tbsp sugar", "1 tsp baking powder", "1/2 tsp salt", "1 cup milk", "1 large egg", "2 tbsp melted butter"],
+                instructions: [
+                    "In a large bowl, whisk together the flour, sugar, baking powder, and salt.",
+                    "In a separate bowl, whisk the milk, egg, and melted butter.",
+                    "Pour the wet ingredients into the dry ingredients and mix until just combined. Do not overmix.",
+                    "Heat a lightly oiled pan or griddle over medium-high heat. Pour about 1/4 cup of batter for each pancake.",
+                    "Cook for 2-3 minutes, until bubbles form on the surface. Flip and cook until golden brown."
+                ]
+            },
+            {
+                id: 3,
+                title: "Chicken Stir-fry",
+                image: "chicken-stir-fry.jpg",
+                link: "https://www.allrecipes.com/recipe/228821/chicken-and-vegetable-stir-fry/",
+                prepTime: "30 minutes",
+                servings: "3",
+                ingredients: ["2 tbsp soy sauce", "1 tbsp honey", "1 tsp ginger, grated", "1 lb boneless, skinless chicken breast", "1 tbsp sesame oil", "Mixed vegetables (broccoli, bell peppers, carrots)"],
+                instructions: [
+                    "In a bowl, mix soy sauce, honey, and ginger. Add chicken and marinate for 10 minutes.",
+                    "Heat sesame oil in a large skillet or wok over high heat.",
+                    "Add marinated chicken and cook until no longer pink. Remove chicken from the pan.",
+                    "Add vegetables to the pan and stir-fry for 5-7 minutes until tender-crisp.",
+                    "Return chicken to the pan, toss everything together, and serve immediately."
+                ]
+            },
+            {
+                id: 4,
+                title: "Simple Tomato Soup",
+                image: "tomato soup.jpg",
+                link: "https://www.allrecipes.com/recipe/234256/simple-tomato-soup/",
+                prepTime: "45 minutes",
+                servings: "4",
+                ingredients: ["1 tbsp olive oil", "1 onion, chopped", "2 garlic cloves, minced", "2 cans (400g each) diced tomatoes", "4 cups vegetable broth", "1/2 cup heavy cream"],
+                instructions: [
+                    "Heat oil in a pot over medium heat. Sauté onion until soft.",
+                    "Add garlic and cook for another minute until fragrant.",
+                    "Pour in the diced tomatoes and vegetable broth. Bring to a boil, then reduce heat and simmer for 20 minutes.",
+                    "Use an immersion blender to puree the soup until smooth. Stir in the heavy cream and heat through.",
+                    "Serve hot, garnished with fresh basil if desired."
+                ]
+            },
+            {
+                id: 5,
+                title: "Chocolate Cake",
+                image: "choclate cake.webp",
+                link: "https://www.allrecipes.com/recipe/228694/chocolate-cake-i/",
+                prepTime: "40 minutes",
+                servings: "8",
+                ingredients: ["1.5 cups all-purpose flour", "1 cup granulated sugar", "1/2 cup unsweetened cocoa powder", "1 tsp baking soda", "1/2 tsp salt", "1/2 cup vegetable oil", "1 cup water", "1 tbsp white vinegar", "1 tsp vanilla extract"],
+                instructions: [
+                    "Preheat oven to 350°F (175°C). Grease and flour a 9x13 inch pan.",
+                    "In a large bowl, whisk together flour, sugar, cocoa powder, baking soda, and salt.",
+                    "Add oil, water, vinegar, and vanilla extract. Beat until smooth.",
+                    "Pour batter into the prepared pan.",
+                    "Bake for 30 to 35 minutes, or until a toothpick inserted into the center comes out clean.",
+                    "Let the cake cool completely before frosting."
+                ]
+            },
+            {
+                id: 6,
+                title: "Lemon Herb Roasted Chicken",
+                image: "Lemon Herb Roasted Chicken.jpg",
+                link: "https://www.foodnetwork.com/recipes/lemon-herb-roasted-chicken-recipe-1941215",
+                prepTime: "90 minutes",
+                servings: "4",
+                ingredients: ["1 whole chicken (4-5 lbs)", "1 lemon, quartered", "4 cloves garlic", "2 tbsp olive oil", "1 tbsp dried rosemary", "1 tsp dried thyme", "Salt and pepper"],
+                instructions: [
+                    "Preheat oven to 425°F (220°C).",
+                    "Pat the chicken dry with paper towels. Rub with olive oil and season generously with salt, pepper, rosemary, and thyme.",
+                    "Place lemon quarters and garlic cloves inside the chicken cavity.",
+                    "Roast for 60-75 minutes, or until the juices run clear when the thigh is pierced.",
+                    "Let the chicken rest for 10 minutes before carving and serving."
+                ]
+            },
+            {
+                id: 7,
+                title: "Veggie Burger Patties",
+                image: "Veggie Burger Patties.webp",
+                link: "https://www.foodnetwork.com/recipes/rachael-ray/black-bean-burgers-recipe-1943801",
+                prepTime: "40 minutes",
+                servings: "4",
+                ingredients: ["1 can (400g) black beans, rinsed and mashed", "1/2 cup breadcrumbs", "1/4 cup finely chopped onion", "1 egg", "1 tbsp barbecue sauce", "1/2 tsp garlic powder", "Salt and pepper to taste"],
+                instructions: [
+                    "In a large bowl, combine the mashed black beans, breadcrumbs, chopped onion, egg, barbecue sauce, garlic powder, salt, and pepper.",
+                    "Mix until well combined. Form the mixture into four equal-sized patties.",
+                    "Heat a skillet with a little oil over medium heat.",
+                    "Cook the patties for 5-7 minutes per side, until they are heated through and have a nice crust.",
+                    "Serve on buns with your favorite toppings."
+                ]
+            },
+            {
+                id: 8,
+                title: "Creamy Mushroom Risotto",
+                image: "Creamy Mushroom Risotto.webp",
+                link: "https://www.foodnetwork.com/recipes/creamy-mushroom-risotto-recipe-1940984",
+                prepTime: "45 minutes",
+                servings: "2",
+                ingredients: ["4 cups chicken or vegetable broth", "1 tbsp olive oil", "1 cup Arborio rice", "1/2 cup white wine", "2 cups mushrooms, sliced", "1/4 cup grated Parmesan cheese", "2 tbsp butter"],
+                instructions: [
+                    "Heat the broth in a saucepan and keep it at a low simmer.",
+                    "In a separate pot, heat olive oil and sauté the mushrooms until golden brown. Remove and set aside.",
+                    "Add the rice to the pot and toast for 1-2 minutes. Pour in the white wine and stir until absorbed.",
+                    "Begin adding the simmering broth, one ladle at a time, stirring continuously until each ladle is absorbed before adding the next.",
+                    "After about 20 minutes, the rice should be creamy and al dente. Stir in the mushrooms, Parmesan cheese, and butter. Serve immediately."
+                ]
+            },
+            {
+                id: 9,
+                title: "Fresh Garden Salad",
+                image: "Fresh Garden Salad.webp",
+                link: "https://www.foodnetwork.com/recipes/fresh-garden-salad-recipe-1942103",
+                prepTime: "15 minutes",
+                servings: "4",
+                ingredients: ["1 head of lettuce, torn", "1 large cucumber, sliced", "2 tomatoes, chopped", "1 red onion, thinly sliced", "1/2 cup Kalamata olives", "1/4 cup feta cheese", "For dressing: olive oil, red wine vinegar, salt, pepper"],
+                instructions: [
+                    "In a large bowl, combine the lettuce, cucumber, tomatoes, and red onion.",
+                    "Toss in the Kalamata olives and crumble the feta cheese over the top.",
+                    "In a small jar, shake together olive oil, red wine vinegar, salt, and pepper.",
+                    "Pour the dressing over the salad just before serving and toss to coat."
+                ]
+            },
+            {
+                id: 10,
+                title: "Easy Focaccia Bread",
+                image: "Easy Focaccia Bread.webp",
+                link: "https://www.foodnetwork.com/recipes/easy-focaccia-bread-recipe-2122606",
+                prepTime: "120 minutes",
+                servings: "10",
+                ingredients: ["1 package (1/4 oz) active dry yeast", "1 cup warm water", "2 1/2 cups all-purpose flour", "1 tsp salt", "2 tbsp olive oil", "1/2 cup tomato sauce", "2 cups mozzarella cheese", "Toppings of choice"],
+                instructions: [
+                    "In a small bowl, dissolve yeast in warm water. Let stand for 5 minutes.",
+                    "In a large bowl, combine flour and salt. Pour in the yeast mixture and olive oil. Mix until a dough forms.",
+                    "Knead the dough on a floured surface for 5-7 minutes. Place in a greased bowl, cover, and let rise for 30 minutes.",
+                    "Preheat oven to 450°F (230°C). Punch down the dough and roll it out into a 12-inch circle.",
+                    "Place on a pizza stone or baking sheet. Spread with tomato sauce, mozzarella cheese, and your favorite toppings. Bake for 12-15 minutes until the crust is golden and the cheese is bubbly."
+                ]
+            },
+            {
+                id: 11,
+                title: "Beef and Broccoli",
+                image: "Beef and Broccoli.webp",
+                link: "https://www.foodnetwork.com/recipes/food-network-kitchen/beef-and-broccoli-recipe-1976214",
+                prepTime: "25 minutes",
+                servings: "4",
+                ingredients: ["1 lb flank steak", "2 tbsp cornstarch", "2 tbsp soy sauce", "1 tbsp sesame oil", "1 tbsp vegetable oil", "1 lb broccoli florets", "1/4 cup beef broth", "1 tbsp brown sugar", "2 cloves garlic, minced"],
+                instructions: [
+                    "Slice the flank steak thinly against the grain. In a bowl, toss the steak with cornstarch and soy sauce.",
+                    "Heat vegetable oil in a large skillet or wok over high heat. Add beef and cook until browned. Remove and set aside.",
+                    "Add broccoli to the skillet and stir-fry for 3-4 minutes. Add beef broth, cover, and steam for 2 minutes.",
+                    "In a small bowl, whisk together remaining soy sauce, sesame oil, brown sugar, and garlic. Pour over the broccoli.",
+                    "Return beef to the skillet and toss everything together to coat. Serve immediately."
+                ]
+            },
+            {
+                id: 12,
+                title: "Lemony Shrimp Scampi",
+                image: "Lemony Shrimp Scampi.jpg",
+                link: "https://www.foodnetwork.com/recipes/ina-garten/shrimp-scampi-recipe-1915993",
+                prepTime: "20 minutes",
+                servings: "2",
+                ingredients: ["1 lb shrimp, peeled and deveined", "2 tbsp olive oil", "2 tbsp butter", "4 cloves garlic, minced", "1/2 cup white wine", "Juice of 1 lemon", "1/4 cup chopped fresh parsley", "Salt and red pepper flakes to taste", "Pasta of choice"],
+                instructions: [
+                    "Cook pasta according to package directions. Drain and set aside.",
+                    "In a large skillet, heat olive oil and butter over medium heat. Add garlic and red pepper flakes and cook for 1 minute.",
+                    "Add the shrimp to the skillet and cook for 2-3 minutes until pink.",
+                    "Pour in the white wine and lemon juice. Bring to a simmer and cook for 1 minute.",
+                    "Stir in the fresh parsley, salt, and pepper. Add the cooked pasta to the skillet and toss to combine. Serve immediately."
+                ]
+            },
+            {
+                id: 13,
+                title: "Chicken Tikka Masala",
+                image: "Chicken Tikka Masala.jpg",
+                link: "https://www.foodnetwork.com/recipes/food-network-kitchen/chicken-tikka-masala-3362143",
+                prepTime: "60 minutes",
+                servings: "4",
+                ingredients: ["1 lb boneless, skinless chicken breast", "1 cup plain yogurt", "1 tbsp ginger-garlic paste", "1 tsp turmeric", "1 tsp cumin", "1 tsp paprika", "1 tbsp vegetable oil", "1 onion, chopped", "1 can (14 oz) crushed tomatoes", "1 cup heavy cream"],
+                instructions: [
+                    "Cut chicken into cubes. In a bowl, combine yogurt, ginger-garlic paste, turmeric, cumin, and paprika. Marinate the chicken for at least 30 minutes.",
+                    "Heat oil in a large pot. Add the chopped onion and cook until golden brown.",
+                    "Add the marinated chicken and cook until browned on all sides.",
+                    "Stir in crushed tomatoes and simmer for 15-20 minutes. Stir in the heavy cream and cook until the sauce thickens.",
+                    "Serve hot with rice or naan."
+                ]
+            },
+            {
+                id: 14,
+                title: "Crispy Smashed Potatoes",
+                image: "Crispy Smashed Potatoes.webp",
+                link: "https://www.foodnetwork.com/recipes/food-network-kitchen/crispy-smashed-potatoes-3361546",
+                prepTime: "50 minutes",
+                servings: "4",
+                ingredients: ["1.5 lbs small potatoes", "2 tbsp olive oil", "1/2 tsp garlic powder", "1/2 tsp paprika", "Salt and pepper to taste", "Fresh parsley for garnish"],
+                instructions: [
+                    "Preheat oven to 425°F (220°C).",
+                    "Boil potatoes in a pot of salted water until fork-tender, about 15-20 minutes.",
+                    "Drain the potatoes and place them on a baking sheet. Using a fork or potato masher, gently smash each potato.",
+                    "Drizzle with olive oil and sprinkle with garlic powder, paprika, salt, and pepper.",
+                    "Bake for 20-25 minutes, or until golden brown and crispy. Garnish with parsley and serve."
+                ]
+            },
+            {
+                id: 15,
+                title: "Easy Homemade Pizza",
+                image: "Easy Homemade Pizza.jpg",
+                link: "https://www.foodnetwork.com/recipes/pizza-dough-recipe-1920038",
+                prepTime: "60 minutes",
+                servings: "4",
+                ingredients: ["1 package (1/4 oz) active dry yeast", "1 cup warm water", "2 1/2 cups all-purpose flour", "1 tsp salt", "2 tbsp olive oil", "1/2 cup tomato sauce", "2 cups mozzarella cheese", "Toppings of choice"],
+                instructions: [
+                    "In a small bowl, dissolve yeast in warm water. Let stand for 5 minutes.",
+                    "In a large bowl, combine flour and salt. Pour in the yeast mixture and olive oil. Mix until a dough forms.",
+                    "Knead the dough on a floured surface for 5-7 minutes. Place in a greased bowl, cover, and let rise for 30 minutes.",
+                    "Preheat oven to 450°F (230°C). Punch down the dough and roll it out into a 12-inch circle.",
+                    "Place on a pizza stone or baking sheet. Spread with tomato sauce, mozzarella cheese, and your favorite toppings. Bake for 12-15 minutes until the crust is golden and the cheese is bubbly."
+                ]
+            },
+            {
+                id: 16,
+                title: "Paneer Butter Masala",
+                image: "Paneer Butter Masala.jpg",
+                link: "https://www.indianhealthyrecipes.com/paneer-butter-masala-recipe/",
+                prepTime: "40 minutes",
+                servings: "4",
+                ingredients: ["250g paneer, cubed", "2 tbsp butter", "1 onion, finely chopped", "1 tsp ginger-garlic paste", "2 tomatoes, pureed", "1/2 cup cashews, soaked", "1 tbsp kasuri methi", "1/2 cup heavy cream", "Spices: turmeric, red chili powder, garam masala"],
+                instructions: [
+                    "In a pan, heat butter and sauté onion until translucent. Add ginger-garlic paste and cook until the raw smell is gone.",
+                    "Add the tomato puree and all the spices. Cook until the oil separates.",
+                    "Grind the soaked cashews to a smooth paste and add to the pan. Cook for 5 minutes.",
+                    "Add water to adjust consistency, then add the paneer cubes and kasuri methi. Simmer for 10 minutes.",
+                    "Stir in the heavy cream, heat through, and serve hot with naan or rice."
+                ]
+            },
+            {
+                id: 17,
+                title: "Dal Makhani",
+                image: "Dal Makhani.webp",
+                link: "https://www.indianhealthyrecipes.com/dal-makhani-recipe/",
+                prepTime: "120 minutes",
+                servings: "4",
+                ingredients: ["1/2 cup whole black lentils (urad dal)", "2 tbsp kidney beans (rajma)", "2 tbsp ghee or butter", "1 onion, finely chopped", "1 tbsp ginger-garlic paste", "1 tsp red chili powder", "1 tsp garam masala", "1/2 cup tomato puree", "1/2 cup cream"],
+                instructions: [
+                    "Soak lentils and kidney beans overnight. Cook them in a pressure cooker with salt and water until soft.",
+                    "In a separate pan, heat ghee. Add onion and sauté until golden brown. Add ginger-garlic paste and cook for a minute.",
+                    "Stir in tomato puree, red chili powder, and garam masala. Cook until the oil separates.",
+                    "Add the cooked dal and kidney beans to the pan. Simmer on low heat for at least 30 minutes, allowing flavors to meld.",
+                    "Stir in the cream, and a dollop of butter. Simmer for a few more minutes and serve hot."
+                ]
+            },
+            {
+                id: 18,
+                title: "Chole Bhature",
+                image: "Chole Bhature.jpg",
+                link: "https://www.indianhealthyrecipes.com/chole-bhature-recipe/",
+                prepTime: "90 minutes",
+                servings: "4",
+                ingredients: ["1 cup chickpeas (chole), soaked overnight", "2 onions, chopped", "2 tomatoes, pureed", "2 tbsp chole masala", "1/2 tsp baking soda", "2 cups all-purpose flour", "1/4 cup yogurt", "Oil for frying"],
+                instructions: [
+                    "Boil chickpeas with a pinch of baking soda until soft. Drain and set aside.",
+                    "For the chole, sauté onions, ginger-garlic paste, and tomato puree until oil separates. Add chole masala and mix well.",
+                    "Add the boiled chickpeas and cook for 15-20 minutes. Mash some of the chickpeas to thicken the gravy.",
+                    "For the bhature, mix flour, yogurt, and a pinch of salt to form a soft dough. Let it rest for 30 minutes.",
+                    "Roll out small portions of the dough into oval shapes and deep fry in hot oil until they puff up."
+                ]
+            },
+            {
+                id: 20,
+                title: "Masala Dosa",
+                image: "Masala Dosa.webp",
+                link: "https://www.indianhealthyrecipes.com/masala-dosa-recipe/",
+                prepTime: "30 minutes",
+                servings: "4",
+                ingredients: ["1 cup dosa batter", "1 tbsp oil", "1 onion, chopped", "1 tsp mustard seeds", "1 tsp urad dal", "1 green chili", "2 potatoes, boiled and mashed", "1/2 tsp turmeric powder"],
+                instructions: [
+                    "Heat oil in a pan, add mustard seeds and urad dal. Sauté for a minute.",
+                    "Add onion and green chili, cook until soft. Stir in mashed potatoes, turmeric, and salt.",
+                    "Cook the potato filling for a few minutes. Set aside.",
+                    "Heat a non-stick tawa. Spread a thin layer of dosa batter. Drizzle oil and cook until golden.",
+                    "Place a portion of the potato filling in the center and fold the dosa. Serve with sambar and chutney."
+                ]
+            },
+            {
+                id: 21,
+                title: "Palak Paneer",
+                image: "Palak Paneer.webp",
+                link: "https://www.indianhealthyrecipes.com/palak-paneer-recipe/",
+                prepTime: "40 minutes",
+                servings: "4",
+                ingredients: ["250g paneer, cubed", "3 cups spinach, blanched and pureed", "1 onion, chopped", "1 tomato, pureed", "1 tbsp ginger-garlic paste", "1/2 tsp garam masala", "1/4 cup heavy cream", "Oil for cooking"],
+                instructions: [
+                    "Blanch spinach and puree it. Set aside.",
+                    "Heat oil in a pan, sauté onion until golden. Add ginger-garlic paste and cook for a minute.",
+                    "Stir in tomato puree and spices. Cook until the oil separates.",
+                    "Add the spinach puree and simmer for 5-7 minutes. Add paneer cubes and cook for 2 minutes.",
+                    "Stir in the heavy cream and serve hot with roti or naan."
+                ]
+            },
+            {
+                id: 22,
+                title: "Rajma Chawal",
+                image: "Rajma Chawal.webp",
+                link: "https://www.indianhealthyrecipes.com/rajma-chawal-recipe/",
+                prepTime: "180 minutes",
+                servings: "4",
+                ingredients: ["1 cup kidney beans (rajma), soaked overnight", "2 onions, chopped", "2 tomatoes, pureed", "1 tbsp ginger-garlic paste", "1 tsp cumin powder", "1 tsp coriander powder", "1/2 tsp garam masala", "Oil for cooking"],
+                instructions: [
+                    "Boil the soaked rajma in a pressure cooker until soft. Set aside.",
+                    "Heat oil in a pot, sauté onions until golden brown. Add ginger-garlic paste and cook for a minute.",
+                    "Stir in tomato puree, cumin, and coriander powder. Cook until the oil separates.",
+                    "Add the cooked rajma and garam masala. Simmer on low heat for 20-30 minutes.",
+                    "Serve hot with steamed rice."
+                ]
+            },
+            {
+                id: 23,
+                title: "Aloo Gobi",
+                image: "Aloo Gobi.webp",
+                link: "https://www.indianhealthyrecipes.com/aloo-gobi-recipe/",
+                prepTime: "45 minutes",
+                servings: "3",
+                ingredients: ["2 potatoes, cubed", "1 cauliflower, cut into florets", "1 onion, chopped", "1 tbsp ginger-garlic paste", "1 tsp turmeric powder", "1 tsp cumin powder", "1 tsp coriander powder", "Oil for cooking"],
+                instructions: [
+                    "Heat oil in a pan, add potatoes and cauliflower. Fry until lightly golden brown. Set aside.",
+                    "In the same pan, sauté onion until soft. Add ginger-garlic paste and cook for a minute.",
+                    "Stir in the spices and a splash of water to prevent burning. Cook for 2 minutes.",
+                    "Add the fried potatoes and cauliflower back to the pan. Mix well, cover, and cook on low heat until tender.",
+                    "Garnish with fresh cilantro and serve hot."
+                ]
+            },
+            {
+                id: 24,
+                title: "Tandoori Roti",
+                image: "Tandoori Roti.webp",
+                link: "https://www.indianhealthyrecipes.com/tandoori-roti-recipe/",
+                prepTime: "60 minutes",
+                servings: "4",
+                ingredients: ["2 cups whole wheat flour", "1/2 tsp salt", "1/2 cup warm water", "1/4 cup yogurt", "1 tsp baking powder", "Butter or ghee for brushing"],
+                instructions: [
+                    "In a large bowl, mix flour, salt, and baking powder. Add yogurt and gradually add water to form a soft dough.",
+                    "Knead the dough for 5-7 minutes. Cover with a damp cloth and let it rest for 30 minutes.",
+                    "Divide the dough into small balls and flatten each ball with your hand or a rolling pin.",
+                    "Heat a tawa or an upside-down pot on high heat. Stick the roti to the hot surface and cook until bubbles form.",
+                    "Flip the roti directly over the flame using tongs and cook until it gets brown spots. Brush with butter or ghee and serve."
+                ]
+            },
+            {
+                id: 25,
+                title: "Aloo Paratha",
+                image: "Aloo Paratha.jpeg",
+                link: "https://www.indianhealthyrecipes.com/aloo-paratha-recipe/",
+                prepTime: "60 minutes",
+                servings: "4",
+                ingredients: ["2 cups whole wheat flour", "2 potatoes, boiled and mashed", "1 onion, finely chopped", "1 green chili, chopped", "1 tsp garam masala", "1/2 tsp red chili powder", "Butter or ghee for frying"],
+                instructions: [
+                    "Prepare a soft dough with whole wheat flour, salt, and water. Set aside.",
+                    "For the filling, mix mashed potatoes, chopped onion, green chili, garam masala, red chili powder, and salt.",
+                    "Roll a small portion of dough into a circle. Place a spoonful of the potato filling in the center and seal the edges.",
+                    "Gently roll out the stuffed dough into a flat circle.",
+                    "Heat a tawa or a non-stick pan. Cook the paratha with a little butter or ghee until golden brown and crispy on both sides."
+                ]
+            },
+             {
+                id: 26,
+                title: "Hyderabadi Chicken Biryani",
+                image: "Hyderabadi Chicken Biryani.jpg",
+                link: "https://www.indianhealthyrecipes.com/hyderabadi-chicken-biryani-recipe/",
+                prepTime: "120 minutes",
+                servings: "4",
+                ingredients: ["1 kg chicken, cut into pieces", "1 cup yogurt", "1/2 cup fried onions", "2 tbsp ginger-garlic paste", "Spices: biryani masala, red chili powder, turmeric", "2 cups basmati rice", "Saffron strands soaked in milk", "Fresh mint and coriander leaves"],
+                instructions: [
+                    "Marinate chicken in yogurt, ginger-garlic paste, and all the spices for at least one hour.",
+                    "Partially cook the basmati rice (about 70% done).",
+                    "In a heavy-bottomed pot, layer the marinated chicken, a layer of fried onions, then the partially cooked rice.",
+                    "Sprinkle saffron milk, mint, and coriander leaves on top. Cover and cook on low heat (dum) for 30-40 minutes.",
+                    "Serve hot with raita."
+                ]
+            },
+            {
+                id: 27,
+                title: "Samosa",
+                image: "Samosa.jpeg",
+                link: "https://www.indianhealthyrecipes.com/samosa-recipe/",
+                prepTime: "90 minutes",
+                servings: "8-10",
+                ingredients: ["2 cups all-purpose flour", "1/4 cup oil or ghee", "1/2 tsp carom seeds (ajwain)", "For filling: 3 potatoes, boiled and mashed", "1 cup green peas", "Spices: roasted cumin, coriander powder, amchur", "Oil for frying"],
+                instructions: [
+                    "For the dough, mix flour, oil, salt, and carom seeds. Add water and knead into a firm dough. Let it rest for 30 minutes.",
+                    "For the filling, heat oil and sauté spices. Add mashed potatoes and peas. Cook for a few minutes.",
+                    "Roll out the dough into a circle, cut in half, and form into a cone. Fill with the potato mixture and seal the edges.",
+                    "Deep fry the samosas on low heat until golden brown and crispy."
+                ]
+            },
+            {
+                id: 28,
+                title: "Masala Chai",
+                image: "Masala Chai.webp",
+                link: "https://www.indianhealthyrecipes.com/masala-chai-recipe-masala-tea/",
+                prepTime: "10 minutes",
+                servings: "2",
+                ingredients: ["2 cups water", "1 cup milk", "2 tbsp black tea leaves", "2 tsp grated ginger", "1-2 crushed cardamoms", "1 small cinnamon stick", "Sugar to taste"],
+                instructions: [
+                    "In a saucepan, bring water to a boil. Add grated ginger, cardamom, and cinnamon. Simmer for 5 minutes.",
+                    "Add black tea leaves and milk. Bring to a boil, then reduce heat and simmer for 2-3 minutes.",
+                    "Strain the tea into cups. Add sugar to taste and serve hot."
+                ]
+            },
+            {
+                id: 29,
+                title: "Idli",
+                image: "Idli.webp",
+                link: "https://www.indianhealthyrecipes.com/idli-recipe-soft-idli/",
+                prepTime: "600 minutes",
+                servings: "4",
+                ingredients: ["1 cup urad dal (black gram)", "2 cups idli rice", "1/2 tsp fenugreek seeds", "Salt to taste"],
+                instructions: [
+                    "Wash and soak urad dal, idli rice, and fenugreek seeds separately for 6-8 hours.",
+                    "Grind the urad dal into a smooth paste. Grind the idli rice to a slightly coarse texture. Mix both batters together.",
+                    "Add salt, mix well, and let the batter ferment overnight.",
+                    "Grease idli molds. Pour the batter into the molds and steam for 10-15 minutes.",
+                    "Serve hot with sambar and coconut chutney."
+                ]
+            },
+            {
+                id: 30,
+                title: "Dosa",
+                image: "Dosa.jpg",
+                link: "https://www.indianhealthyrecipes.com/dosa-recipe/",
+                prepTime: "600 minutes",
+                servings: "4",
+                ingredients: ["1 cup urad dal (black gram)", "2 cups idli rice", "1/2 tsp fenugreek seeds", "Salt to taste", "Oil for cooking"],
+                instructions: [
+                    "Soak urad dal, idli rice, and fenugreek seeds for 6-8 hours. Grind them into a smooth batter and ferment overnight.",
+                    "Heat a non-stick tawa. Pour a ladle of batter and spread it into a thin circle.",
+                    "Drizzle oil around the edges and cook until the dosa is golden brown and crispy.",
+                    "Flip and cook for a few seconds. Serve hot with sambar and chutney."
+                ]
+            },
+            {
+                id: 31,
+                title: "Puri",
+                image: "Puri.webp",
+                link: "https://www.indianhealthyrecipes.com/puri-recipe/",
+                prepTime: "40 minutes",
+                servings: "4",
+                ingredients: ["2 cups whole wheat flour", "1/2 tsp salt", "1 tbsp oil", "Water to knead", "Oil for deep frying"],
+                instructions: [
+                    "In a bowl, mix flour and salt. Add oil and rub it into the flour.",
+                    "Gradually add water and knead a firm dough. Cover and let it rest for 15-20 minutes.",
+                    "Divide the dough into small balls and roll them out into small, flat circles.",
+                    "Heat oil for deep frying in a wok or kadai. Fry one puri at a time, pressing it gently with a spatula to make it puff up.",
+                    "Fry until golden brown on both sides. Drain on a paper towel and serve hot with a curry or sabzi."
+                ]
+            },
+             {
+                id: 32,
+                title: "Vada Pav",
+                image: "Vada Pav.jpg",
+                link: "https://www.indianhealthyrecipes.com/vada-pav-recipe/",
+                prepTime: "60 minutes",
+                servings: "4",
+                ingredients: ["4 pav buns", "4 potatoes, boiled and mashed", "1 cup chickpea flour (besan)", "1 tbsp ginger-garlic paste", "1 tsp turmeric powder", "1 tsp mustard seeds", "10-12 curry leaves", "Oil for frying"],
+                instructions: [
+                    "For the vada filling, heat oil, add mustard seeds, and curry leaves. Add ginger-garlic paste and turmeric. Add mashed potatoes and salt. Mix well and form into small balls.",
+                    "Prepare a batter with besan, red chili powder, salt, and water.",
+                    "Dip the potato balls in the batter and deep fry until golden brown and crispy.",
+                    "Slit the pav buns, spread green chutney and tamarind chutney. Place the vada in between. Serve hot."
+                ]
+            },
+            {
+                id: 33,
+                title: "Poha",
+                image: "Poha.webp",
+                link: "https://www.indianhealthyrecipes.com/poha-recipe/",
+                prepTime: "20 minutes",
+                servings: "2",
+                ingredients: ["1 cup thick poha (flattened rice)", "1 tbsp oil", "1/2 tsp mustard seeds", "1/2 tsp cumin seeds", "1 onion, chopped", "1 green chili, chopped", "1/2 tsp turmeric powder", "A few curry leaves", "Roasted peanuts"],
+                instructions: [
+                    "Wash the poha and drain it well. It should be moist but not soggy.",
+                    "Heat oil in a pan, add mustard and cumin seeds. Let them splutter. Add curry leaves, green chili, and onion. Sauté until translucent.",
+                    "Add turmeric powder and mix well. Add the drained poha and salt. Mix gently to combine.",
+                    "Cover the pan and steam for 2-3 minutes. Garnish with roasted peanuts and fresh coriander. Serve hot."
+                ]
+            },
+            {
+                id: 34,
+                title: "Dhokla",
+                image: "Dhokla.webp",
+                link: "https://www.indianhealthyrecipes.com/dhokla-recipe/",
+                prepTime: "60 minutes",
+                servings: "4",
+                ingredients: ["1 cup gram flour (besan)", "1/2 cup yogurt", "1 tbsp lemon juice", "1 tsp ginger-green chili paste", "1 tsp Eno fruit salt", "For tempering: mustard seeds, curry leaves, green chilies"],
+                instructions: [
+                    "In a bowl, mix besan, yogurt, ginger-green chili paste, lemon juice, and salt. Add water to make a smooth batter. Let it rest for 15 minutes.",
+                    "Grease a steaming pan. Add Eno to the batter and whisk quickly until it becomes frothy. Pour into the pan.",
+                    "Steam for 15-20 minutes until a toothpick comes out clean. Let it cool.",
+                    "For tempering, heat oil, add mustard seeds, curry leaves, and green chilies. Pour this over the steamed dhokla.",
+                    "Cut into pieces and serve with chutney."
+                ]
+            },
+            {
+                id: 35,
+                title: "Missal Pav",
+                image: "Missal Pav.webp",
+                link: "https://www.indianhealthyrecipes.com/misal-pav-recipe/",
+                prepTime: "60 minutes",
+                servings: "4",
+                ingredients: ["1 cup sprouted moth beans (matki)", "1 onion, chopped", "2 tomatoes, pureed", "2 tbsp goda masala or garam masala", "2 tbsp oil", "For serving: pav buns, farsan, chopped onions, lemon wedges"],
+                instructions: [
+                    "Pressure cook the sprouted moth beans with salt and turmeric until soft. Set aside.",
+                    "In a large pot, heat oil. Add onion and sauté until golden. Add ginger-garlic paste and cook.",
+                    "Stir in tomato puree and masalas. Cook until oil separates. Add the boiled moth beans and water.",
+                    "Bring to a boil and simmer for 15 minutes to create the missal curry.",
+                    "Serve hot with pav buns, topped with farsan, chopped onions, and a squeeze of lemon."
+                ]
+            },
+            {
+                id: 36,
+                title: "Undhiyu (Gujarati Mix Vegetable Curry)",
+                image: "Undhiyu.webp",
+                link: "https://www.indianhealthyrecipes.com/undhiyu-recipe-surti-undhiyu/",
+                prepTime: "90 minutes",
+                servings: "4",
+                ingredients: ["1/2 cup Surti papdi", "1/2 cup green beans", "1/2 cup raw banana, cubed", "1/2 cup potato, cubed", "1/4 cup muthiya (dumplings)", "1 tbsp ginger-garlic paste", "Spices: green chili paste, turmeric, coriander powder", "Oil for cooking"],
+                instructions: [
+                    "In a large pot, heat oil and add the vegetables in layers. Add a layer of spices and ginger-garlic paste in between the vegetable layers.",
+                    "Cook covered on low heat for about 45-60 minutes, stirring occasionally until the vegetables are tender.",
+                    "Add muthiya and cook for another 10-15 minutes.",
+                    "Serve hot with puri or roti."
+                ]
+            },
+            {
+                id: 37,
+                title: "Khandvi (Gujarati Snack)",
+                image: "Khandvi.webp",
+                link: "https://www.indianhealthyrecipes.com/khandvi-recipe/",
+                prepTime: "30 minutes",
+                servings: "4",
+                ingredients: ["1 cup gram flour (besan)", "1 cup sour yogurt", "1 tbsp lemon juice", "1 tsp ginger-green chili paste", "For tempering: mustard seeds, sesame seeds, asafoetida", "Oil for tempering"],
+                instructions: [
+                    "In a large bowl, mix besan, yogurt, ginger-green chili paste, lemon juice, and water to make a smooth batter.",
+                    "Cook the batter on low heat, stirring continuously until it thickens into a smooth paste.",
+                    "Immediately spread a thin layer of the paste on a greased plate. Let it cool and set for 10 minutes.",
+                    "Cut the cooled layer into strips and roll them up tightly. Arrange the rolls on a serving plate.",
+                    "For tempering, heat oil, add mustard seeds, and sesame seeds. Pour this over the khandvi rolls. Garnish with fresh coconut and cilantro."
+                ]
+            },
+            {
+                id: 38,
+                title: "Thepla (Gujarati Flatbread)",
+                image: "Thepla.webp",
+                link: "https://www.indianhealthyrecipes.com/thepla-recipe/",
+                prepTime: "45 minutes",
+                servings: "4",
+                ingredients: ["2 cups whole wheat flour", "1 cup chopped fenugreek leaves (methi)", "1/2 cup yogurt", "1 tbsp ginger-green chili paste", "1 tsp turmeric powder", "1 tsp red chili powder", "Oil for frying"],
+                instructions: [
+                    "In a large bowl, mix flour, fenugreek leaves, ginger-green chili paste, and spices. Add yogurt and oil to form a soft dough.",
+                    "Knead well and let it rest for 15 minutes.",
+                    "Divide the dough into small balls and roll them into thin circles.",
+                    "Heat a tawa or pan. Cook the thepla on both sides, using a little oil until golden brown spots appear.",
+                    "Serve hot with pickle or curd."
+                ]
+            },
+            {
+                id: 39,
+                title: "Dal Baati Churma (Rajasthani Dish)",
+                image: "Dal Baati Churma.webp",
+                link: "https://www.indianhealthyrecipes.com/dal-bati-churma-recipe/",
+                prepTime: "120 minutes",
+                servings: "4",
+                ingredients: ["For Dal: 1/2 cup mixed lentils", "2 tomatoes, chopped", "1 onion, chopped", "Spices: turmeric, red chili powder, garam masala", "For Baati: 2 cups whole wheat flour", "1/4 cup ghee", "For Churma: 1 cup fried baati", "1/2 cup sugar"],
+                instructions: [
+                    "For Dal, pressure cook lentils with salt and turmeric. In a separate pot, sauté onions and tomatoes with spices. Add the cooked dal and simmer for 15-20 minutes.",
+                    "For Baati, mix flour, ghee, and water to make a firm dough. Divide into balls and bake in an oven or on a tandoor until golden brown.",
+                    "For Churma, crush the baked baati into a coarse powder. Mix with powdered sugar and ghee.",
+                    "Serve the three components together: hot dal, baked baati, and churma."
+                ]
+            },
+            {
+                id: 40,
+                title: "Gatte ki Sabzi (Rajasthani Curry)",
+                image: "Gatte ki Sabzi.webp",
+                link: "https://www.indianhealthyrecipes.com/gatte-ki-sabzi-recipe/",
+                prepTime: "60 minutes",
+                servings: "4",
+                ingredients: ["1 cup gram flour (besan)", "1/2 cup yogurt", "1 tbsp ginger-garlic paste", "2 onions, pureed", "2 tomatoes, pureed", "Spices: red chili powder, turmeric, garam masala", "Oil for cooking"],
+                instructions: [
+                    "Mix besan, yogurt, and spices with water to form a firm dough. Roll into long cylinders and boil until cooked.",
+                    "Cut the cooked cylinders (gatte) into small pieces. Set aside.",
+                    "In a pot, heat oil and sauté onion puree until golden. Add ginger-garlic paste and tomato puree. Cook with spices until oil separates.",
+                    "Add the gatte and a cup of water. Simmer for 15-20 minutes. Serve hot with roti."
+                ]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const getStartedBtn = document.querySelector('.btn-get-started');
+            const pages = document.querySelectorAll('.page-section');
+            const recipeGrid = document.getElementById('recipe-grid');
+            const recipeDetailPage = document.getElementById('recipe-detail-page');
+
+            let timerInterval;
+
+            const showPage = (pageId) => {
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+            };
+
+            const renderRecipesList = () => {
+                recipeGrid.innerHTML = '';
+                recipes.forEach(recipe => {
+                    const card = document.createElement('div');
+                    card.className = 'recipe-preview-card';
+                    card.dataset.id = recipe.id;
+                    card.innerHTML = `
+                        <img src="${recipe.image}" onerror="this.onerror=null;this.src='https://placehold.co/600x600/D2B48C/fff?text=Recipe+Image';" alt="${recipe.title}">
+                        <h3>${recipe.title}</h3>
+                    `;
+                    card.addEventListener('click', () => renderRecipeDetail(recipe.id));
+                    recipeGrid.appendChild(card);
+                });
+            };
+
+            const renderRecipeDetail = (id) => {
+                const recipe = recipes.find(r => r.id === id);
+                if (!recipe) return;
+
+                recipeDetailPage.innerHTML = `
+                    <div class="container">
+                        <button id="backBtn" class="btn-detail">Back to Recipes</button>
+                        <div class="recipe-card-detail">
+                            <img src="${recipe.image}" onerror="this.onerror=null;this.src='https://placehold.co/600x600/D2B48C/fff?text=Recipe+Image';" alt="${recipe.title}" class="recipe-image-detail">
+                            <div class="recipe-details-content">
+                                <h1>${recipe.title}</h1>
+                                <div class="meta">
+                                    <span>Preparation Time: ${recipe.prepTime}</span> | 
+                                    <span>Servings: ${recipe.servings}</span>
+                                </div>
+                                <div class="ingredients-list-detail">
+                                    <h3>Ingredients</h3>
+                                    <ul id="ingredients-detail">
+                                        ${recipe.ingredients.map(i => `<li>${i}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div class="instructions-list-detail">
+                                    <h3>Instructions</h3>
+                                    <ol id="instructions-detail">
+                                        ${recipe.instructions.map(s => `<li>${s}</li>`).join('')}
+                                    </ol>
+                                </div>
+                                <div class="progress-container-detail">
+                                    <h3>Prep Progress</h3>
+                                    <div class="progress-bar-detail">
+                                        <div class="progress-fill-detail" id="progressBar-detail"></div>
+                                    </div>
+                                    <div id="timerDisplay-detail" class="timer-display-detail">Ready to start!</div>
+                                </div>
+                                <div class="controls-detail">
+                                    <button id="startCooking-detail" class="btn-detail">Start Cooking</button>
+                                    <button id="nextStep-detail" class="btn-detail" disabled>Next Step</button>
+                                    <a href="${recipe.link}" target="_blank" class="btn-detail">View Full Recipe</a>
+                                    <button id="downloadPdfBtn" class="btn-detail">Download as PDF</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                showPage('recipe-detail-page');
+                setupRecipeDetailListeners(recipe);
+            };
+            
+            const setupRecipeDetailListeners = (recipe) => {
+                const backBtn = document.getElementById('backBtn');
+                const startCookingBtn = document.getElementById('startCooking-detail');
+                const nextStepBtn = document.getElementById('nextStep-detail');
+                const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+                const instructionsList = document.getElementById('instructions-detail');
+                const progressBar = document.getElementById('progressBar-detail');
+                const timerDisplay = document.getElementById('timerDisplay-detail');
+                
+                let currentStepIndex = -1;
+                let prepTimeInMinutes = parseInt(recipe.prepTime);
+                let timerSeconds = prepTimeInMinutes * 60;
+
+                backBtn.addEventListener('click', () => {
+                    showPage('recipes-list-page');
+                    renderRecipesList();
+                });
+
+                startCookingBtn.addEventListener('click', () => {
+                    currentStepIndex = 0;
+                    const steps = instructionsList.getElementsByTagName('li');
+                    if (steps.length > 0) {
+                        steps[0].classList.add('highlighted');
+                    }
+                    startCookingBtn.disabled = true;
+                    nextStepBtn.disabled = false;
+                    startTimer(timerSeconds);
+                });
+                
+                nextStepBtn.addEventListener('click', () => {
+                    const steps = instructionsList.getElementsByTagName('li');
+                    if (currentStepIndex >= 0) {
+                        steps[currentStepIndex].classList.remove('highlighted');
+                    }
+                    currentStepIndex++;
+                    if (currentStepIndex < steps.length) {
+                        steps[currentStepIndex].classList.add('highlighted');
+                    } else {
+                        nextStepBtn.disabled = true;
+                        timerDisplay.textContent = 'Cooking Complete!';
+                        clearInterval(timerInterval);
+                        alert('Congratulations, you have finished cooking!');
+                    }
+                });
+
+                downloadPdfBtn.addEventListener('click', () => {
+                    window.print();
+                });
+                
+                function startTimer(duration) {
+                    let timer = duration;
+                    timerInterval = setInterval(() => {
+                        let minutes = parseInt(timer / 60, 10);
+                        let seconds = parseInt(timer % 60, 10);
+                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                        seconds = seconds < 10 ? "0" + seconds : seconds;
+                        timerDisplay.textContent = `Time Remaining: ${minutes}:${seconds}`;
+                        const progressPercentage = ((duration - timer) / duration) * 100;
+                        progressBar.style.width = progressPercentage + '%';
+                        if (--timer < 0) {
+                            clearInterval(timerInterval);
+                            timerDisplay.textContent = 'Time\'s up!';
+                            nextStepBtn.disabled = true;
+                        }
+                    }, 1000);
+                }
+            };
+
+            // Event Listeners for Navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const pageId = event.target.dataset.page;
+                    showPage(pageId);
+                    if (pageId === 'recipes-list-page') {
+                        renderRecipesList();
+                    }
+                });
+            });
+
+            getStartedBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                showPage('recipes-list-page');
+                renderRecipesList();
+            });
+
+            // Initial load
+            showPage('home-page');
+        });
+    </script>
+</body>
+</html>
